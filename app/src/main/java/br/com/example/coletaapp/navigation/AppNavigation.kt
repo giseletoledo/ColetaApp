@@ -6,13 +6,20 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.com.example.coletaapp.ui.AddressListScreen
+import br.com.example.coletaapp.ui.MainScreen
 import br.com.example.coletaapp.ui.AddressDetailScreen
 
 @Composable
 fun AppNavigation() {
+    // Criação do NavController
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "addressList") {
+    // Configuração da navegação
+    NavHost(navController = navController, startDestination = "mainScreen") {
+        composable("mainScreen") {
+            // Passando o navController para a MainScreen
+            MainScreen(navController = navController)
+        }
         composable("addressList") {
             AddressListScreen(navController = navController)
         }
