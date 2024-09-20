@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import br.com.example.coletaapp.ui.components.BottomNavigationBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,6 +43,9 @@ fun AddressDetailScreen(navController: NavController, addressId: Int) {
                     titleContentColor = MaterialTheme.colorScheme.onPrimary // Cor do texto sobre a cor primária
                 )
             )
+        },
+        bottomBar = {
+            BottomNavigationBar(navController = navController)  // Barra de navegação sempre presente
         }
     ) { innerPadding ->
         selectedAddress?.let { address ->
