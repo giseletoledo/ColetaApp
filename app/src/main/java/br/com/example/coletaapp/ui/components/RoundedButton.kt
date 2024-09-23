@@ -10,6 +10,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.Hyphens
+import androidx.compose.ui.text.style.LineBreak
+import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun RoundedButton(
@@ -19,12 +23,11 @@ fun RoundedButton(
     modifier: Modifier = Modifier,
     buttonColor: Color = MaterialTheme.colorScheme.primary,
     contentColor: Color = MaterialTheme.colorScheme.onPrimary,
-    iconSize: Int = 62 // Novo parâmetro para definir o tamanho do ícone
+    iconSize: Int = 48 // Novo parâmetro para definir o tamanho do ícone
 ) {
     Column(
         modifier = modifier
-            .padding(6.dp)
-            .width(120.dp),  // Largura do botão quadrado
+            .width(115.dp),  // Largura do botão quadrado
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Alterando o shape para RoundedCornerShape para cantos arredondados
@@ -36,15 +39,20 @@ fun RoundedButton(
                 contentColor = contentColor
             ),
             modifier = Modifier
-                .size(96.dp) // Aumentando o tamanho do botão quadrado
+                .size(118.dp) // Aumentando o tamanho do botão quadrado
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceBetween,
+                verticalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxSize()
             ) {
-                Icon(icon, contentDescription = null, tint = Color.White) // Cor do ícone
-                Text(text, color = Color.White, fontSize = 12.sp) // Cor do texto
+                Icon(icon, contentDescription = null, tint = Color.White,
+                    modifier = Modifier.size(iconSize.dp)
+                    ) // ícone
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text, color = Color.White, textAlign = TextAlign.Center, fontSize = 14.sp, style = TextStyle.Default.copy(
+                    lineBreak = LineBreak.Simple
+                ), modifier = Modifier.fillMaxWidth()) // texto
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
