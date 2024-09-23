@@ -11,22 +11,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import br.com.example.coletaapp.model.Address
 import br.com.example.coletaapp.ui.components.BottomNavigationBar
+
 
 @Composable
 fun AddressListScreen(navController: NavController) {
-    val addresses = listOf(
-        Address(1, "Ceará", "Fortaleza", "Aldeota", "6h20", "SEGUNDA, QUARTA E SEXTA", "Diurno"),
-        Address(2, "São Paulo", "São Paulo", "Centro", "8h00", "TERÇA E QUINTA", "Noturno")
-    )
-
-    // State to hold the search query
-    var searchQuery by remember { mutableStateOf("") }
-
-    // Filtered addresses based on the search query
-    val filteredAddresses = addresses.filter {
-        it.city.contains(searchQuery, ignoreCase = true) ||
-                it.state.contains(searchQuery, ignoreCase = true)
+    // Simulando dados de endereços
+    val addresses = remember {
+        listOf(
+            Address(id = 1, state = "Ceará", city = "Fortaleza", neighborhoods = emptyList()),
+            Address(id = 2, state = "São Paulo", city = "São Paulo", neighborhoods = emptyList())
+            // Adicione mais endereços conforme necessário
+        )
     }
 
     Scaffold(
@@ -43,34 +40,22 @@ fun AddressListScreen(navController: NavController) {
             BottomNavigationBar(navController = navController)
         }
     ) { innerPadding ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(16.dp)
         ) {
-            // Search TextField
-            TextField(
-                value = searchQuery,
-                onValueChange = { searchQuery = it },
-                label = { Text("Buscar por cidade ou estado") },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // LazyColumn to display filtered addresses
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(filteredAddresses) { address ->
-                    Text(
-                        text = "${address.state}, ${address.city}",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                            .clickable {
-                                navController.navigate("addressDetail/${address.id}")
-                            }
-                    )
+            items(addresses) { address ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .clickable {
+                            navController.navigate("addressDetail/${address.id}")
+                        },
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = "${address.state}, ${address.city}")
                 }
             }
         }
